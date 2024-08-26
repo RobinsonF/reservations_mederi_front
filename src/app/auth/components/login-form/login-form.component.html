@@ -1,0 +1,60 @@
+<h1 class="text-center font-medium py-2 text-gray-700">Iniciar sesión</h1>
+<form [formGroup]="form" novalidate class="space-y-4" (ngSubmit)="doLogin()">
+  <div>
+    <div class="relative">
+      <input #nameInput formControlName="email" placeholder="Ingresa tu correo" type="email"
+        class="w-full rounded bg-gray-100 border-gray-300 border-2 focus:border-success-focus focus:ring-success-focus" />
+      <button type="button" class="p-2 absolute right-2" (click)="nameInput.focus()">
+        <fa-icon [icon]="faPen"></fa-icon>
+      </button>
+    </div>
+    @if (form.controls.email.touched && form.controls.email.invalid) {
+    <div>
+      @if (form.controls.email.hasError('required')) {
+      <p class="font-medium text-red-500 text-xs mt-1 ml-1">
+        Este campo es obligatorio
+      </p>
+      }
+      @if (form.controls.email.hasError('email')) {
+      <p class="font-medium text-red-500 text-xs mt-1 ml-1">
+        Este campo debe ser un correo electrónico
+      </p>
+      }
+    </div>
+    }
+  </div>
+  <div>
+    <div class="relative">
+      <input formControlName="password" placeholder="Ingresa tu contraseña" [type]="showPassword ? 'text' : 'password'"
+        class="w-full rounded bg-gray-100 border-gray-300 border-2 focus:border-success-focus focus:ring-success-focus" />
+      <button type="button" class="p-2 absolute right-2" (click)="showPassword = !showPassword">
+        <fa-icon [icon]="showPassword ? faEye : faEyeSlash"></fa-icon>
+      </button>
+    </div>
+    @if (form.controls.password.touched && form.controls.password.invalid) {
+    <div>
+      @if (form.controls.password.hasError('required')) {
+      <p class="font-medium text-red-500 text-xs mt-1 ml-1">
+        Este campo es obligatorio
+      </p>
+      }
+      @if (form.controls.password.hasError('minlength')) {
+      <p class="font-medium text-red-500 text-xs mt-1 ml-1">
+        Este campo debería tener mínimo 6 caracteres
+      </p>
+      }
+    </div>
+    }
+
+  </div>
+  @if (status === 'failed') {
+  <div>
+    <p class="font-medium text-red-500 text-xs mt-1 ml-1">
+      Credenciales invalidas
+    </p>
+  </div>
+  }
+  <div>
+    <app-button typeBtn="submit" color="success" [loading]="status === 'loading'">Login</app-button>
+  </div>
+</form>

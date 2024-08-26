@@ -1,0 +1,65 @@
+<h1 class="text-center font-medium py-2 text-gray-700">Establece tu nueva contraseña</h1>
+<form [formGroup]="form" novalidate class="space-y-4" (ngSubmit)="recovery()">
+  <div>
+    <div class="relative">
+      <input formControlName="newPassword" placeholder="Ingresa tu nueva contraseña" [type]="showPassword ? 'text' : 'password'"
+        class="w-full rounded bg-gray-100 border-gray-300 border-2 focus:border-success-focus focus:ring-success-focus" />
+      <button type="button" class="p-2 absolute right-2" (click)="showPassword = !showPassword">
+        <fa-icon [icon]="showPassword ? faEye : faEyeSlash"></fa-icon>
+      </button>
+    </div>
+    @if (form.controls.newPassword.touched && form.controls.newPassword.invalid) {
+    <div>
+      @if (form.controls.newPassword.hasError('required')) {
+      <p class="font-medium text-red-500 text-xs mt-1 ml-1">
+        Este campo es obligatorio
+      </p>
+      }
+
+      @if (form.controls.newPassword.hasError('minlength')) {
+      <p class="font-medium text-red-500 text-xs mt-1 ml-1">
+        Este campo debería tener mínimo 6 caracteres
+      </p>
+      }
+    </div>
+    }
+
+  </div>
+  <div>
+    <div class="relative">
+      <input formControlName="confirmPassword" placeholder="Confirma tu nueva contraseña" type="password"
+        class="w-full rounded bg-gray-100 border-gray-300 border-2 focus:border-success-focus focus:ring-success-focus" />
+    </div>
+    @if (form.controls.confirmPassword.touched &&
+    form.controls.confirmPassword.invalid) {
+    <div>
+      @if (form.controls.confirmPassword.hasError('required')) {
+      <p class="font-medium text-red-500 text-xs mt-1 ml-1">
+        Este campo es obligatorio
+      </p>
+      }
+
+      @if (form.controls.confirmPassword.hasError('minlength')) {
+      <p class="font-medium text-red-500 text-xs mt-1 ml-1">
+        Este campo debería tener mínimo 6 caracteres
+      </p>
+      }
+
+    </div>
+    }
+
+  </div>
+  @if (form.controls.confirmPassword.touched) {
+  <div>
+    @if (form.hasError('mismatch')) {
+    <p class="font-medium text-red-500 text-xs mt-1 ml-1">
+      Las contraseñas no coinciden
+    </p>
+    }
+  </div>
+  }
+
+  <div>
+    <app-button typeBtn="submit" color="success" [loading]="status === 'loading'">Recuperar</app-button>
+  </div>
+</form>
