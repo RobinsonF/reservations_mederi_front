@@ -14,16 +14,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
     const tokenService = inject(TokenService);
     const isValidToken = tokenService.isValidToken();
     if (isValidToken) {
-      const token = tokenService.getToken();
-      const bearer = 'Bearer ' + token;
-      if (token) {
-        const tokenReq = req.clone({
-          headers: req.headers.set('Authorization', bearer)
-        });
-        return next(tokenReq);
-      } else {
-        return next(req);
-      }
+      return addToken(req, next);
     } else {
       return next(req);
     }
@@ -31,3 +22,18 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
     return next(req);
   }
 };
+
+const addToken: HttpInterceptorFn = (req, next) => {
+  const tokenService = inject(TokenService);
+  const token = tokenService.getToken();
+  const bearer = 'Bearer ' + token;
+  if (token) {
+    const authRequest = req.clone({
+      headers: req.headers.set('Authorization', bearer)
+    });
+    return next(authRequest);
+  } else {
+    return next(req);
+  }
+}
+

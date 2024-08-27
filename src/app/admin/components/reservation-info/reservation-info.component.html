@@ -1,0 +1,57 @@
+<div class="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50">
+  <div class="bg-white max-w-lg w-full p-6 rounded-lg shadow-lg border border-gray-200">
+    <div class="py-2 px-4 text-center relative">
+      <span class="block font-medium text-xl text-normal text-gray-900">Detalle de la reservación</span>
+      <button (click)="close()" class="block text-sm text-gray-900 absolute right-3 top-3">
+        <fa-icon [icon]="faClose"></fa-icon>
+      </button>
+    </div>
+    <div class="text-gray-700 space-y-4">
+      <div>
+        <span class="text-lg font-medium text-gray-800">Propósito</span>
+        <p class="text-base">{{ reservation()?.purpose }}</p>
+        <hr class="my-4 border-gray-300" />
+      </div>
+      <div>
+        <div class="flex justify-start space-x-2 mb-2">
+          <span class="font-medium text-gray-700">Fecha de Inicio:</span>
+          <span>{{ reservation()?.startTime | date: 'medium' }}</span>
+        </div>
+        <div class="flex justify-start">
+          <span class="font-medium text-gray-700">Fecha de Fin:</span>
+          <span>{{ reservation()?.endTime | date: 'medium' }}</span>
+        </div>
+        <hr class="my-4 border-gray-300" />
+      </div>
+
+      <div>
+        <span class="text-lg font-medium text-gray-800">Usuario</span>
+        <div class="flex justify-start space-x-2 mb-2">
+          <span class="font-medium text-gray-700">Nombre:</span>
+          <span>{{ reservation()?.user?.name }}</span>
+        </div>
+        <div class="flex justify-start space-x-2">
+          <span class="font-medium text-gray-700">Correo:</span>
+          <span>{{ reservation()?.user?.email }}</span>
+        </div>
+        <hr class="my-4 border-gray-300" />
+      </div>
+
+      <div>
+        <span class="text-lg font-medium text-gray-800">Sala</span>
+        <div class="flex justify-start space-x-2 mb-2">
+          <span class="font-medium text-gray-700">Nombre:</span>
+          <span>{{ reservation()?.room?.name }}</span>
+        </div>
+        <div class="flex justify-start space-x-2 mb-2">
+          <span class="font-medium text-gray-700">Ubicación:</span>
+          <span>{{ reservation()?.room?.location }}</span>
+        </div>
+        <div class="flex justify-start space-x-2">
+          <span class="font-medium text-gray-700">Capacidad:</span>
+          <span>{{ reservation()?.room?.capacity }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

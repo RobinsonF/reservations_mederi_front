@@ -9,13 +9,15 @@ import { AuthService } from '../../../core/services/auth.service';
 import { ICreateAuthUser } from '../../../core/models/user.model';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
+import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-register-form',
   standalone: true,
   imports: [ReactiveFormsModule, FontAwesomeModule, ButtonComponent],
   templateUrl: './register-form.component.html',
-  styleUrl: './register-form.component.scss'
+  styleUrl: './register-form.component.scss',
+  providers: [NotificationService]
 })
 export class RegisterFormComponent {
 
@@ -35,7 +37,8 @@ export class RegisterFormComponent {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private notificationService: NotificationService
   ) { }
 
   register() {
@@ -52,11 +55,11 @@ export class RegisterFormComponent {
           {
             next: () => {
               this.status = 'success';
+              this.notificationService.showSuccess('Registrado correctamente', 'Ahora puedes iniciar sesión');
               this.router.navigate(['/login']);
             },
             error: () => {
               this.status = 'failed';
-
             },
           }
         );

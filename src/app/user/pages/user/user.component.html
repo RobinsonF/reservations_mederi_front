@@ -1,0 +1,66 @@
+<div class="container mx-auto flex mt-10">
+  <div class="w-full p-6 bg-white shadow-lg rounded-lg border border-gray-200 overflow-x-auto">
+    <div class="flex items-center justify-between mb-4">
+      <div class="relative">
+        <input type="text" (keyup)="applyFilter($event)" placeholder="Buscar..."
+          class="border border-gray-300 rounded-lg py-2 px-4 pr-12 focus:outline-none focus:ring-2 focus:border-success-focus focus:ring-success-focus">
+        <span class="absolute inset-y-0 right-0 flex items-center pr-4">
+          <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M15 11a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM21 21l-4.35-4.35"></path>
+          </svg>
+        </span>
+      </div>
+      <button
+        class="bg-success text-white py-2 px-4 rounded-lg hover:bg-success-hover focus:outline-none focus:ring-2 focus:border-success-focus focus:ring-success-focus">Crear</button>
+    </div>
+    <div>
+      <table mat-table [dataSource]="dataSource" class="min-w-full divide-y divide-gray-200">
+        <ng-container matColumnDef="id">
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" mat-header-cell
+            *matHeaderCellDef>ID</th>
+          <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let element">{{element.id}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" mat-header-cell
+            *matHeaderCellDef>Nombre</th>
+          <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let element">{{element.name}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" mat-header-cell
+            *matHeaderCellDef>Correo</th>
+          <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let element">{{element.email}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="role">
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" mat-header-cell
+            *matHeaderCellDef>Rol</th>
+          <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let element">{{element.role}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="createdAt">
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" mat-header-cell
+            *matHeaderCellDef>Fecha de Creación</th>
+          <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let element">{{element.createdAt | date:
+            'shortDate'}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="active">
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" mat-header-cell
+            *matHeaderCellDef>Activo</th>
+          <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let element">{{element.active ? 'Sí' : 'No'}}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+      <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+
+</div>

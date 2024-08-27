@@ -1,25 +1,35 @@
 import { Injectable } from '@angular/core';
 import { setCookie, getCookie, removeCookie } from 'typescript-cookie';
 import jwt_decode, { JwtPayload } from 'jwt-decode';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, PLATFORM_ID } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenService {
 
-  constructor() { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
 
   saveToken(token: string) {
-    setCookie('token', token, { expires: 12, path: '/' });
+    if (isPlatformBrowser(this.platformId)) {
+      setCookie('token', token, { expires: 12, path: '/' });
+    }
   }
 
   getToken() {
-    const token = getCookie('token') || '';
-    return token;
+    if (isPlatformBrowser(this.platformId)) {
+      const token = getCookie('token') || '';
+      return token;
+    } else {
+      return '';
+    }
   }
 
   removeToken() {
-    removeCookie('token');
+    if (isPlatformBrowser(this.platformId)) {
+      removeCookie('token');
+    }
   }
 
   isValidToken() {

@@ -6,13 +6,15 @@ import { AuthService } from '../../../core/services/auth.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
+import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-login-form',
   standalone: true,
   imports: [ReactiveFormsModule, FontAwesomeModule, ButtonComponent],
   templateUrl: './login-form.component.html',
-  styleUrl: './login-form.component.scss'
+  styleUrl: './login-form.component.scss',
+  providers: [NotificationService]
 })
 export class LoginFormComponent {
 
@@ -26,6 +28,7 @@ export class LoginFormComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
+    private notificationService: NotificationService
   ) { }
 
   form = this.formBuilder.nonNullable.group({
@@ -41,7 +44,8 @@ export class LoginFormComponent {
         subscribe({
           next: () => {
             this.status = 'success';
-            alert('Bienvenido')
+            this.router.navigate(['/app/calendar']);
+            this.notificationService.showSuccess('Bienvenido', 'Bienvenido');
           },
           error: () => {
             this.status = 'failed';
