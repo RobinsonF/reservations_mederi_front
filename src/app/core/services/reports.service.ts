@@ -18,4 +18,9 @@ export class ReportsService {
     const url = `${environment.API_URL}/api/v1/reports/frequencyReport`;
     return this.http.get<IResponseL<any>>(url, { context: checkToken() });
   }
+
+  hoursReport(): Observable<IResponseL<any>> {
+    const url = `${environment.API_URL}/api/v1/reports/hoursReport`;
+    return this.http.get<IResponseL<any>>(url, { context: checkToken() });
+  }
 }

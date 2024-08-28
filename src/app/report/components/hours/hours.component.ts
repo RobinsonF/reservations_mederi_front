@@ -2,13 +2,13 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { ChartModule } from 'primeng/chart';
 
 @Component({
-  selector: 'app-frequency',
+  selector: 'app-hours',
   standalone: true,
   imports: [ChartModule],
-  templateUrl: './frequency.component.html',
-  styleUrl: './frequency.component.scss'
+  templateUrl: './hours.component.html',
+  styleUrl: './hours.component.scss'
 })
-export class FrequencyComponent implements OnInit, OnChanges {
+export class HoursComponent implements OnInit, OnChanges{
 
   basicData: any;
   basicOptions: any;
@@ -27,14 +27,15 @@ export class FrequencyComponent implements OnInit, OnChanges {
     const textColor = documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-    const roomNames = this.data.map(room => room.name);
-    const roomReservations = this.data.map(room => room.reservationCount);
+
+    const roomNames = this.data.map(room => room.room.name);
+    const roomHours = this.data.map(room => room.totalHours);
     this.basicData = {
       labels: roomNames,
       datasets: [
         {
-          label: 'Número de reservaciones',
-          data: roomReservations,
+          label: 'Número de horas reservadas',
+          data: roomHours,
           borderWidth: 1
         }
       ]

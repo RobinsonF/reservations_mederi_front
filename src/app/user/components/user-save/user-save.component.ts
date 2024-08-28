@@ -9,6 +9,7 @@ import { RequestStatus } from '../../../core/models/request-status.model';
 import { CustomValidators } from '../../../core/utils/validators';
 import { UserService } from '../../../core/services/user.service';
 import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 interface InputData {
   id: number,
@@ -24,7 +25,7 @@ interface OutputData {
 @Component({
   selector: 'app-user-save',
   standalone: true,
-  imports: [DialogModule, FontAwesomeModule, ReactiveFormsModule, ButtonComponent],
+  imports: [DialogModule, FontAwesomeModule, ReactiveFormsModule, ButtonComponent, ToastModule],
   templateUrl: './user-save.component.html',
   styleUrl: './user-save.component.scss',
   providers: [MessageService]
@@ -100,7 +101,8 @@ export class UserSaveComponent implements OnInit {
             }
           },
           error: (error) => {
-              this.status = 'failed';
+            this.status = 'failed';
+            this.messageService.add({ severity: 'error', summary: error.error.message, detail: '' });
           }
         })
       } else {
@@ -117,6 +119,7 @@ export class UserSaveComponent implements OnInit {
           },
           error: (error) => {
             this.status = 'failed';
+            this.messageService.add({ severity: 'error', summary: error, detail: '' });
           }
         })
       }
