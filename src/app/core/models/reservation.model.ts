@@ -17,3 +17,7 @@ export interface IFindAllReservation extends IReservation {
   user: IUser;
   room: IRoom;
 }
+
+export interface ICreateReservation extends Omit<IReservation, 'id' | 'createdAt'> {
+
+}

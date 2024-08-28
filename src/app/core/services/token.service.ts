@@ -18,18 +18,12 @@ export class TokenService {
   }
 
   getToken() {
-    if (isPlatformBrowser(this.platformId)) {
-      const token = getCookie('token') || '';
-      return token;
-    } else {
-      return '';
-    }
+    const token = getCookie('token') || '';
+    return token;
   }
 
   removeToken() {
-    if (isPlatformBrowser(this.platformId)) {
-      removeCookie('token');
-    }
+    removeCookie('token');
   }
 
   isValidToken() {

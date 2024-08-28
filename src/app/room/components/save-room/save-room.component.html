@@ -1,0 +1,127 @@
+<div
+  class="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
+  <div class="relative w-full max-w-xl mx-auto my-6">
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <div class="px-6 py-3 border-b">
+        <label class="text-lg font-medium">Sala</label>
+        <button (click)="close(false, '', null)" class="absolute top-0 right-0 p-2">
+          <fa-icon [icon]="faClose"></fa-icon>
+        </button>
+      </div>
+      <div class="p-6">
+        <form class="" [formGroup]="form" (ngSubmit)="onSave()">
+
+          <div class="mb-4">
+            <div class="relative">
+              <input formControlName="name" placeholder="Ingresa el nombre" type="text" name="name"
+                class="w-full rounded bg-gray-100 border-gray-300 border-2 focus:border-success-focus focus:ring-success-focus" />
+            </div>
+            @if (form.controls.name.touched && form.controls.name.invalid) {
+            <div>
+              @if (form.controls.name.hasError('required')) {
+              <p class="font-medium text-red-500 text-xs mt-1 ml-1">
+                Este campo es obligatorio
+              </p>
+              }
+            </div>
+            }
+          </div>
+
+          <div class="mb-4">
+            <div class="relative">
+              <textarea formControlName="location" placeholder="Ingresa la ubicación" type="text" name="location"
+                class="w-full rounded bg-gray-100 border-gray-300 border-2 focus:border-success-focus focus:ring-success-focus">
+              </textarea>
+            </div>
+            @if (form.controls.location.touched && form.controls.location.invalid) {
+            <div>
+              @if (form.controls.location.hasError('required')) {
+              <p class="font-medium text-red-500 text-xs mt-1 ml-1">
+                Este campo es obligatorio
+              </p>
+              }
+            </div>
+            }
+          </div>
+
+          <div class="mb-4">
+            <div class="relative">
+              <input formControlName="capacity" placeholder="Ingresa la capacidad" type="text" name="capacity"
+                class="w-full rounded bg-gray-100 border-gray-300 border-2 focus:border-success-focus focus:ring-success-focus" />
+            </div>
+            @if (form.controls.capacity.touched && form.controls.capacity.invalid) {
+            <div>
+              @if (form.controls.capacity.hasError('required')) {
+              <p class="font-medium text-red-500 text-xs mt-1 ml-1">
+                Este campo es obligatorio
+              </p>
+              }
+            </div>
+            }
+          </div>
+
+          <div class="flex flex-col space-y-2" formArrayName="equipment">
+            <hr>
+            <span class="font-medium">Recursos</span>
+            <div class="flex flex-row items-center justify-center space-x-4 mb-4">
+              <div class="w-1/2">
+                <label for="equipmentId" class="block text-sm font-medium text-gray-700">Equipo</label>
+              </div>
+              <div class="w-1/4">
+                <label for="quantity" class="block text-sm font-medium text-gray-700">Cantidad</label>
+              </div>
+              <div class="w-1/4">
+
+              </div>
+            </div>
+            <div *ngFor="let equipment of equipment.controls; let i = index" [formGroupName]="i"
+              class="flex flex-row items-center justify-center space-x-4 mb-4">
+              <div class="w-1/2">
+                <select name="equipmentId" id="equipmentId" formControlName="equipmentId"
+                  class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:ring-success-focus focus:border-success-focus sm:text-sm">
+                  <option value="">Seleccione...</option>
+                  <option *ngFor="let item of listEquipment()"
+                  [value]="item.id"
+                  [disabled]="isEquipmentDisabled(item.id)">
+            {{ item.name }}
+          </option>                </select>
+                <div *ngIf="equipment.get('equipmentId')?.touched && equipment.get('equipmentId')?.invalid"
+                  class="text-red-500 text-sm mt-1">
+                  <div *ngIf="equipment.get('equipmentId')?.errors?.['required']">Este campo es obligatorio.</div>
+                </div>
+              </div>
+
+              <div class="w-1/4">
+                <input formControlName="quantity" placeholder="Ingresa la cantidad" type="text" name="quantity"
+                  class="mt-1 block w-full rounded bg-gray-100 border-gray-300 shadow-sm focus:ring-success-focus focus:border-success-focus sm:text-sm" />
+                <div *ngIf="equipment.get('quantity')?.touched && equipment.get('quantity')?.invalid"
+                  class="text-red-500 text-sm mt-1">
+                  <div *ngIf="equipment.get('quantity')?.errors?.['required']">Este campo es obligatorio.</div>
+                </div>
+              </div>
+
+              <div class="w-1/4">
+                <button type="button" (click)="removeEquipment(i)"
+                  class="font-medium px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg">
+                  Eliminar
+                </button>
+              </div>
+            </div>
+
+            <div class="flex justify-start py-4">
+              <button type="button" (click)="addEquipment()"
+                class="inline-flex items-center px-4 py-2 border text-sm font-medium rounded-md shadow-sm  focus:outline-none focus:ring-2 focus:ring-offset-2">
+                Añadir Recurso
+              </button>
+            </div>
+          </div>
+
+          <div class="flex space-x-2">
+            <app-button class="w-full" typeBtn="submit" color="success"
+              [loading]="status === 'loading'">Guardar</app-button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -18,3 +18,7 @@ export interface IFindOneRomm extends IRoom {
   reservations: IReservation[];
   equipment: IEquipment[];
 }
+
+export interface ICreateRoom extends Omit<IRoom, 'id' | 'createdAt'> {
+
+}

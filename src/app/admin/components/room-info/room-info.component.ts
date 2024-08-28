@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, signal } from '@angular/core';
 import { DIALOG_DATA, DialogModule, DialogRef } from '@angular/cdk/dialog';
 import { DatePipe } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { IFindAllRomm, IFindOneRomm } from '../../../core/models/room.model';
+import { IFindOneRomm } from '../../../core/models/room.model';
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
 import { RoomService } from '../../../core/services/room.service';
 

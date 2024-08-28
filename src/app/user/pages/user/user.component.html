@@ -12,7 +12,7 @@
           </svg>
         </span>
       </div>
-      <button
+      <button (click)="onCreate()"
         class="bg-success text-white py-2 px-4 rounded-lg hover:bg-success-hover focus:outline-none focus:ring-2 focus:border-success-focus focus:ring-success-focus">Crear</button>
     </div>
     <div>
@@ -52,6 +52,32 @@
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" mat-header-cell
             *matHeaderCellDef>Activo</th>
           <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let element">{{element.active ? 'Sí' : 'No'}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" mat-header-cell
+            *matHeaderCellDef>Acciones</th>
+          <td class="px-6 py-4 whitespace-nowrap text-center" mat-cell *matCellDef="let element">
+            <button (click)="element.isOpen = !element.isOpen" cdkOverlayOrigin #menu="cdkOverlayOrigin">
+              <fa-icon [icon]="faEllipsisV"></fa-icon>
+            </button>
+            <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="menu"
+              [cdkConnectedOverlayOpen]="element.isOpen ? element.isOpen : false"
+              (overlayOutsideClick)="element.isOpen = !element.isOpen">
+              <div
+                class="z-50 my-4 w-52 text-base list-none bg-white rounded-lg divide-y divide-gray-100 shadow border">
+                <div class="flex flex-col">
+                  <button (click)="onUpdate(element)" class="text-start hover:bg-success-focus hover:text-white px-4 py-2">
+                    Editar
+                  </button>
+                  <button (click)="onDelete(element.id)" class="text-start hover:bg-success-focus hover:text-white px-4 py-2">
+                    Eliminar
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+
           </td>
         </ng-container>
 

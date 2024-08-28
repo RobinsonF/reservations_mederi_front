@@ -25,14 +25,14 @@ export class UserService {
     return this.http.get<IResponseO<IFindOneUser>>(url, { context: checkToken() });
   }
 
-  create(user: ICreateUser): Observable<IResponseL<IUser>> {
+  create(user: ICreateUser): Observable<IResponseO<IUser>> {
     const url = `${environment.API_URL}/api/v1/users`;
-    return this.http.post<IResponseL<IUser>>(url, user, { context: checkToken() });
+    return this.http.post<IResponseO<IUser>>(url, user, { context: checkToken() });
   }
 
-  update(user: any): Observable<IResponseL<IUser>> {
-    const url = `${environment.API_URL}/api/v1/users`;
-    return this.http.put<IResponseL<IUser>>(url, user, { context: checkToken() });
+  update(id: number, user: any): Observable<IResponseO<IUser>> {
+    const url = `${environment.API_URL}/api/v1/users/${id}`;
+    return this.http.put<IResponseO<IUser>>(url, user, { context: checkToken() });
   }
 
   delete(id: number): Observable<IResponseO<IUser>> {

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
-import { TokenService } from '../../../core/services/token.service';
 
 @Component({
   selector: 'app-admin',

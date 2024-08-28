@@ -1,0 +1,92 @@
+<div class="flex items-center justify-between mb-4 mt-4">
+  <div class="relative">
+    <input type="text" (keyup)="applyFilter($event)" placeholder="Buscar..."
+      class="border border-gray-300 rounded-lg py-2 px-4 pr-12 focus:outline-none focus:ring-2 focus:border-success-focus focus:ring-success-focus">
+    <span class="absolute inset-y-0 right-0 flex items-center pr-4">
+      <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M15 11a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM21 21l-4.35-4.35"></path>
+      </svg>
+    </span>
+  </div>
+  <button (click)="onCreate()"
+    class="bg-success text-white py-2 px-4 rounded-lg hover:bg-success-hover focus:outline-none focus:ring-2 focus:border-success-focus focus:ring-success-focus">Crear</button>
+</div>
+<div>
+  <table mat-table [dataSource]="dataSource" class="min-w-full divide-y divide-gray-200">
+    <ng-container matColumnDef="date">
+      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" mat-header-cell
+        *matHeaderCellDef>Fecha</th>
+      <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let element">
+        <div class="flex flex-col">
+          <span>{{element.startTime | date: 'medium'}}</span>
+          <span>{{element.endTime | date: 'medium'}}</span>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="purpose">
+      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" mat-header-cell
+        *matHeaderCellDef>Própostio</th>
+      <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let element">{{element.purpose}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" mat-header-cell
+        *matHeaderCellDef>Estado</th>
+      <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let element">{{element.status === 'A' ? 'Activa' :
+        'Cancelada'}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="user">
+      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" mat-header-cell
+        *matHeaderCellDef>Usuario</th>
+      <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let element">{{element.user.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="room">
+      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" mat-header-cell
+        *matHeaderCellDef>Sala</th>
+      <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let element">{{element.room.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" mat-header-cell
+        *matHeaderCellDef>Fecha de Creación</th>
+      <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let element">{{element.createdAt | date:
+        'medium'}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" mat-header-cell
+        *matHeaderCellDef>Acciones</th>
+      <td class="px-6 py-4 whitespace-nowrap text-center" mat-cell *matCellDef="let element">
+        <button (click)="element.isOpen = !element.isOpen" cdkOverlayOrigin #menu="cdkOverlayOrigin">
+          <fa-icon [icon]="faEllipsisV"></fa-icon>
+        </button>
+        <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="menu"
+          [cdkConnectedOverlayOpen]="element.isOpen ? element.isOpen : false"
+          (overlayOutsideClick)="element.isOpen = !element.isOpen">
+          <div class="z-50 my-4 w-52 text-base list-none bg-white rounded-lg divide-y divide-gray-100 shadow border">
+            <div class="flex flex-col">
+              <button (click)="onUpdate(element)" class="text-start hover:bg-success-focus hover:text-white px-4 py-2">
+                Editar
+              </button>
+              <button (click)="onDelete(element.id)"
+                class="text-start hover:bg-success-focus hover:text-white px-4 py-2">
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </ng-template>
+
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+</div>

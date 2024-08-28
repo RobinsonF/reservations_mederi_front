@@ -30,28 +30,8 @@ export class NavbarComponent {
   user: IUser | null = null;
   backgroundColor: Colors = 'success';
 
-  options = [
-    {
-      name: 'Calendario',
-      route: 'calendar'
-    },
-    {
-      name: 'Usuarios',
-      route: 'users'
-    },
-    {
-      name: 'Salas',
-      route: 'rooms'
-    },
-    {
-      name: 'Reservaciones',
-      route: 'reservations'
-    },
-    {
-      name: 'Reportes',
-      route: 'reports'
-    }
-  ]
+  allOptions: any[] = [];
+  userRole: string = '';
 
   constructor(
     private authService: AuthService,
@@ -62,7 +42,24 @@ export class NavbarComponent {
     this.authService.user$.
       subscribe(user => {
         this.user = user;
+        this.allOptions = [
+          { name: 'Calendario', route: 'calendar', roles: ['admin', 'user'] },
+          { name: 'Usuarios', route: 'users', roles: ['admin'] },
+          { name: 'Salas', route: 'rooms', roles: ['admin'] },
+          { name: 'Reservaciones', route: 'reservations', roles: ['admin', 'user'] },
+          { name: 'Reportes', route: 'reports', roles: ['admin'] }
+        ];
+        this.allOptions = this.filterOptions();
       });
+  }
+
+  filterOptions() {
+    return this.allOptions.filter(option => option.roles.includes(this.user?.role));
+  }
+
+  truncateText(text: string | undefined, limit: number = 20): string {
+    if (!text) return '';
+    return text.length > limit ? text.substring(0, limit) + '...' : text;
   }
 
   logout() {

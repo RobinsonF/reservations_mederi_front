@@ -16,3 +16,7 @@ export interface RoomEquipment {
   createdAt: string;
   active: boolean;
 }
+
+export interface ICreateEquipment extends Omit<IEquipment, 'id' | 'createdAt' | 'RoomEquipment'> {
+
+}

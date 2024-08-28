@@ -1,6 +1,7 @@
 import { Routes } from "@angular/router";
 import { AdminComponent } from "./pages/admin/admin.component";
 import { CalendarComponent } from "./pages/calendar/calendar.component";
+import { ProfileComponent } from "./pages/profile/profile.component";
 
 export const ADMIN_ROUTES: Routes = [
   {
@@ -26,6 +27,10 @@ export const ADMIN_ROUTES: Routes = [
       {
         path: 'reports',
         loadChildren: () => import('../report/report.routes').then(m => m.REPORT_ROUTES),
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent
       },
       {
         path: '',

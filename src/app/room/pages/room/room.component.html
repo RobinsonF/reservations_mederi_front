@@ -1,1 +1,12 @@
-<p>room works!</p>
+<div class="container mx-auto flex mt-10">
+  <div class="w-full p-6 bg-white shadow-lg rounded-lg border border-gray-200 overflow-x-auto">
+    <mat-tab-group>
+      <mat-tab label="Salas">
+        <app-table-room></app-table-room>
+      </mat-tab>
+      <mat-tab label="Recursos">
+        <app-table-equipment></app-table-equipment>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

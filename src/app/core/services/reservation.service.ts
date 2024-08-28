@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { IResponseL, IResponseO } from '../models/response.model';
 import { checkToken } from '../interceptors/token.interceptor';
-import { IFindAllReservation } from '../models/reservation.model';
+import { ICreateReservation, IFindAllReservation, IReservation } from '../models/reservation.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +23,20 @@ export class ReservationService {
   getById(id: number): Observable<IResponseO<IFindAllReservation>> {
     const url = `${environment.API_URL}/api/v1/reservations/${id}`;
     return this.http.get<IResponseO<IFindAllReservation>>(url, { context: checkToken() });
+  }
+
+  create(reservation: ICreateReservation): Observable<IResponseO<IFindAllReservation>> {
+    const url = `${environment.API_URL}/api/v1/reservations`;
+    return this.http.post<IResponseO<IFindAllReservation>>(url, reservation, { context: checkToken() });
+  }
+
+  update(id: number, reservation: any): Observable<IResponseO<IFindAllReservation>> {
+    const url = `${environment.API_URL}/api/v1/reservations/${id}`;
+    return this.http.put<IResponseO<IFindAllReservation>>(url, reservation, { context: checkToken() });
+  }
+
+  delete(id: number): Observable<IResponseO<IFindAllReservation>> {
+    const url = `${environment.API_URL}/api/v1/reservations/${id}`;
+    return this.http.delete<IResponseO<IFindAllReservation>>(url, { context: checkToken() });
   }
 }
